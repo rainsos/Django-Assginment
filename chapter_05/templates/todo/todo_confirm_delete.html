@@ -1,0 +1,32 @@
+{#{% extends 'todo/base.html' %}#}
+{##}
+{#{% block content %}#}
+{#  <h2>🗑️ 정말로 삭제하시겠습니까?</h2>#}
+{#  <p>할 일: <strong>{{ object.title }}</strong></p>#}
+{##}
+{#  <form method="post" id="delete_form">#}
+{#    {% csrf_token %}#}
+{#    <button type="button" id="delete_btn">✅ 삭제하기</button>#}
+{#    <a href="{% url 'cbv_todo_info' object.pk %}">❌ 취소</a>#}
+{#  </form>#}
+{#{% endblock %}#}
+{##}
+{#{% block script %}#}
+{#<script>#}
+{#  document.addEventListener('DOMContentLoaded', function () {#}
+{#    const btn = document.querySelector('#delete_btn');#}
+{#    const form = document.querySelector('#delete_form');#}
+{##}
+{#    if (btn && form) {#}
+{#      btn.addEventListener('click', function () {#}
+{#        if (confirm('정말로 삭제하시겠습니까?')) {#}
+{#          form.submit();#}
+{#        }#}
+{#      });#}
+{#    }#}
+{#  });#}
+{#</script>#}
+{#{% endblock %}#}
+
+
+

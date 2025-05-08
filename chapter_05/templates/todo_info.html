@@ -1,0 +1,104 @@
+{% extends 'todo/base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background: #f0f0f0;
+    }
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+    .button-group {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        margin-left: 10px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .button-group:hover {
+        background-color: #0056b3;
+    }
+    #delete_btn {
+        background-color: #ff1122;
+    }
+    #delete_btn:hover {
+        background-color: #cc1122;
+    }
+</style>
+
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>{{ todo.title }}</h1>
+    <div>
+      <button class="button-group" onclick="location.href='{% url 'cbv_todo_update' todo.id %}'">수정하기</button>
+
+      <form id="delete_form" method="post" action="{% url 'cbv_todo_delete' todo.id %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="button" class="button-group" id="delete_btn">삭제하기</button>
+      </form>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>설명</th><td>{{ todo.description }}</td></tr>
+    <tr><th>시작일</th><td>{{ todo.start_date }}</td></tr>
+    <tr><th>마감일</th><td>{{ todo.end_date }}</td></tr>
+    <tr><th>완료 여부</th><td>{{ todo.is_completed|yesno:"완료됨,미완료" }}</td></tr>
+    <tr><th>생성일</th><td>{{ todo.created_at }}</td></tr>
+    <tr><th>수정일</th><td>{{ todo.updated_at }}</td></tr>
+  </table>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.querySelector('#delete_btn');
+    const form = document.querySelector('#delete_form');
+
+    if (btn && form) {
+      btn.addEventListener('click', function () {
+        if (confirm('정말 삭제하시겠습니까?')) {
+          form.submit();
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}
+
+
+
+
