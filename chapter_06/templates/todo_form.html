@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>할 일 {{ data.id|default:'작성' }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-check {
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 16px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>할 일 {{ data.id|default:'작성' }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label>제목:</label>
+            <input type="text" name="title" value="{{ data.title|default:'' }}" required>
+
+            <label>설명:</label>
+            <textarea name="description" required>{{ data.description|default:'' }}</textarea>
+
+            <label>시작일:</label>
+            <input type="date" name="start_date" value="{{ data.start_date|default:'' }}" required>
+
+            <label>마감일:</label>
+            <input type="date" name="end_date" value="{{ data.end_date|default:'' }}" required>
+
+            <div class="form-check">
+                <label><input type="checkbox" name="is_completed" {% if data.is_completed %}checked{% endif %}> 완료 여부</label>
+            </div>
+
+            <button type="submit" class="btn">💾 저장하기</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'todo_list' %}" class="btn">← 목록으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>
+
